@@ -11,13 +11,20 @@
 KPVideoShowSubtitlePlugin::KPVideoShowSubtitlePlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params) : KPPluginAdapter(identify_name, filter_name, filter_type) {
 
     //获取播放文件路径
-    auto current_title = global_event_play.GetLastVariable();
-
+    auto              current_title = global_event_play.GetLastVariable();
     KPlayer::FileInfo file_info(current_title);
+
+    // 字幕文件路径
+    std::string       srt_file_path = file_info.GetBaseFilePath() + file_info.GetBaseFileName() + ".srt";
+    KPlayer::FileInfo srt_file_info(srt_file_path);
+    if (!srt_file_info.Exists()) {
+        logger->error("字幕文件加载失败，字幕文件不存在; path: {}", srt_file_path);
+        throw KPFilterException("字幕文件加载失败；文件不存在 path: " + srt_file_path);
+    }
 
     // 赋值described
     std::stringstream filter_desc_stream;
-    filter_desc_stream << "filename=" << file_info.GetBaseFilePath() << file_info.GetBaseFileName() << ".srt";
+    filter_desc_stream << "filename=" << srt_file_path;
     filter_desc = filter_desc_stream.str();
 
     // 查找过滤器
