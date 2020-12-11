@@ -8,7 +8,7 @@
 
 #include "KPVideoShowSubtitlePlugin.h"
 
-KPVideoShowSubtitlePlugin::KPVideoShowSubtitlePlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params) : KPPluginAdapter(identify_name, filter_name, filter_type) {
+KPVideoShowSubtitlePlugin::KPVideoShowSubtitlePlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParamsObject plugin_params) : KPPluginAdapter(identify_name, filter_name, filter_type, plugin_params) {
 
     //获取播放文件路径
     auto              current_title = global_event_play.GetLastVariable();
@@ -45,5 +45,5 @@ void KPVideoShowSubtitlePlugin::InitTask() {
 
 // slot
 KPLAYER_PLUGIN_FUNC(KPVideoShowSubtitlePlugin) {
-    return new KPVideoShowSubtitlePlugin("kplayer", "video_plugin_show_subtitle", KP_FILTER_TYPE_VIDEO, std::move(params));
+    return new KPVideoShowSubtitlePlugin("kplayer", "video_plugin_show_subtitle", KP_FILTER_TYPE_VIDEO, std::move(plugin_params));
 }

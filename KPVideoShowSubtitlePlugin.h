@@ -19,7 +19,7 @@ protected:
     void Task() override;
     bool stop = false;
 public:
-    explicit KPVideoShowSubtitlePlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params);
+    explicit KPVideoShowSubtitlePlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParamsObject plugin_params);
     ~KPVideoShowSubtitlePlugin() override = default;
     void KillTask() override;
     void InitTask() override;
