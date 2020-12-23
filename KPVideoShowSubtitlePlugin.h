@@ -12,7 +12,7 @@
 #include "adapter/KPPluginAdapter.h"
 #include "util/KPHelper.h"
 
-extern KPEvent<std::string> global_event_play;
+extern KPEvent<std::string> global_event_play_updated;
 
 class KPVideoShowSubtitlePlugin : public KPPluginAdapter {
 protected:
