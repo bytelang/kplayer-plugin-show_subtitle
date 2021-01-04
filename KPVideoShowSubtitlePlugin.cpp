@@ -18,7 +18,6 @@ KPVideoShowSubtitlePlugin::KPVideoShowSubtitlePlugin(const std::string &identify
     std::string       srt_file_path = file_info.GetBaseFilePath() + file_info.GetBaseFileName() + ".srt";
     KPlayer::FileInfo srt_file_info(srt_file_path);
     if (!srt_file_info.Exists()) {
-        logger->error("字幕文件加载失败，字幕文件不存在; path: {}", srt_file_path);
         throw KPFilterException("字幕文件加载失败；文件不存在 path: " + srt_file_path);
     }
 
