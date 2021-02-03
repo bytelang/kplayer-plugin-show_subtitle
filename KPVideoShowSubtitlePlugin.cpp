@@ -23,20 +23,24 @@ KPVideoShowSubtitlePlugin::KPVideoShowSubtitlePlugin(const std::string &identify
     std::string       ass_file_path = file_info.GetBaseFilePath() + file_info.GetBaseFileName() + ".ass";
     KPlayer::FileInfo ass_file_info(ass_file_path);
 
+    std::string       lrc_file_path = file_info.GetBaseFilePath() + file_info.GetBaseFileName() + ".lrc";
+    KPlayer::FileInfo lrc_file_info(lrc_file_path);
+
     if (srt_file_info.Exists()) {
         subtitle_file_path = srt_file_path;
-    }
-    if (ass_file_info.Exists()) {
+    } else if (ass_file_info.Exists()) {
         subtitle_file_path = ass_file_path;
+    } else if (lrc_file_info.Exists()) {
+        subtitle_file_path = lrc_file_path;
     }
 
     if (subtitle_file_path.empty()) {
-        throw KPFilterException("字幕文件加载失败；ass与srt同名字幕文件不存在 path: " + file_info.GetBaseFilePath() + file_info.GetBaseFileName());
+        throw KPFilterException("字幕文件加载失败；同名字幕文件不存在 path: " + file_info.GetBaseFilePath());
     }
 
     // 赋值described
     std::stringstream filter_desc_stream;
-    filter_desc_stream << "filename=" << srt_file_path;
+    filter_desc_stream << "filename=" << subtitle_file_path;
     filter_desc = filter_desc_stream.str();
 
     // 查找过滤器
